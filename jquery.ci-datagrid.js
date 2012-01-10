@@ -45,15 +45,7 @@
 		var loading = false;
 		var ajaxSessionStart = false;
 
-		// Init columns show/hide
-		/*$('.cg-columns-list .cg-checkbox', grid).click(function() {
-			if ($(this).attr('checked')) {
-				$('.cg-table thead tr th:nth-child(' + $(this).val() + '), .cg-table tbody tr td:nth-child(' + $(this).val() + ')').removeClass('cg-hidden');
-			}
-			else {
-				$('.cg-table thead tr th:nth-child(' + $(this).val() + '), .cg-table tbody tr td:nth-child(' + $(this).val() + ')').addClass('cg-hidden');
-			}
-		});
+		/*
 
 		// Init buttons
 		//$('.cg-toolbar .cg-add', grid).html($('.cg-toolbar .cg-add', grid).text()).button({ icons: { primary: 'ui-icon-circle-plus' } });
