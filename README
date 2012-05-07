@@ -1,1 +1,3 @@
-INICIO DEL PROYECTO
+Librería Datagrid para CodeIgniter.
+Crea Datagrids con funciones de ordenación, filtro, eliminar, entre otras.
+Genera además una toolbar con botones y distintas funciones.
