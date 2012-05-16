@@ -21,20 +21,14 @@
 
     // -----------------------------------------------------------------
     $.fn.datagrid = function (options) {
-        var settings = $.extend({}, $.fn.datagrid.defaults, options);
+        var opts = $.extend({}, $.fn.datagrid.defaults, options);
 
         return this.each(function () {
-            $.datagrid(this, settings);
+            $.datagrid(this, opts);
         });
     };
 
-    $.fn.datagrid.defaults = {
-        load: function (grid) {
-            container: 'fancy-container'
-        }
-    };
-
-    $.datagrid = function (grid, settings) {
+    $.datagrid = function (grid, opts) {
         if ($(grid).hasClass('carbogrid-noajax')) {
             return false;
         }
@@ -99,10 +93,10 @@
             }
             //$(this).parents('table').find('td :checkbox').attr('checked', $(this).attr('checked'));
             if ($(this).attr('checked')) {
-                $(this).parents('table').find('tbody td.ui-widget-content').addClass('ui-state-highlight');
+                $(this).parents('table').find('tbody td').addClass('state-highlight');
             }
             else {
-                $(this).parents('table').find('tbody td.ui-widget-content').removeClass('ui-state-highlight');
+                $(this).parents('table').find('tbody td').removeClass('state-highlight');
             }
             checkButtons();
         });
@@ -155,8 +149,8 @@
 
         function initGrid() {
             // Enable/disable buttons
-            checkButtons();
-            ChangeActionForm();
+            //checkButtons();
+            //ChangeActionForm();
 
             //$(".dg-pagination").each(function(){
             //  $(this).attr("href", $(this).attr("href") + "/"+$(".dg_order").text()+"/"+$(".dg_order_type").text());
@@ -165,13 +159,13 @@
                 $(this).removeAttr('checked');
             }); */
             // Autosize de colunmas
-            $("#table-grid tbody tr:last td").each(function(index){
-                var tdWidth = $(this).outerWidth();
-
-                $("#table-grid thead th").eq(index).width(tdWidth);
-                $(this).width(tdWidth);
-
-            });
+            if ( opts.autosize ) {
+                $("tbody tr:last td", grid).each(function(index){
+                    var tdWidth = $(this).outerWidth();
+                    $("thead th", grid).eq(index).width(tdWidth);
+                    $(this).width(tdWidth);
+                });
+            }
 
             $("#dg-bot-clean").click(function (e) {
                 e.preventDefault();
@@ -199,31 +193,24 @@
             });
 
             // Init row selection    
-            $('#table-grid tbody tr:has(:checkbox) td').click(function (e) {
+            $('tbody tr:has(:checkbox) td', grid).click(function (e) {
 
                 if ($(e.target).attr('type') !== 'checkbox') {
-                    var checkbox = $(this).parents('tr').find('td.dg-select :checkbox');
+                    var checkbox = $(this).parents('tr').find('td.fg-select :checkbox');
                     checkbox.attr('checked', !checkbox.attr('checked'));
                 }
                 if ($('td :checkbox').length == $('td :checkbox:checked').length) {
-                    $('th.dg-select :checkbox').attr('checked', 'checked');
+                    $('th.fg-select :checkbox').attr('checked', 'checked');
                 }
                 else {
-                    $('th.dg-select :checkbox').attr('checked', '');
+                    $('th.fg-select :checkbox').attr('checked', '');
                 }
                 checkButtons();
             });
-            // Init row hover
-            $("#table-grid tr").hover(
-                function () {
-                    $(this).children("td").addClass("ui-state-hover");
-                }, function () {
-                    $(this).children("td").removeClass("ui-state-hover");
-            });
 
-            $("#table-grid tr").click(function () {
+            $("tr", grid).click(function () {
 
-                $(this).children("td").toggleClass("ui-state-highlight");
+                $(this).children("td").toggleClass("state-highlight");
             });
             // Toggle the dropdown menu's
             $(".drop-arrow .filter-arrow").click(function () {
@@ -242,7 +229,7 @@
                     $('span.toggle').removeClass('active');
                 }
             }); // END document.bind
-            settings.load(grid);
+            opts.load(grid);
         }
         
         function show_dialogo_frame(href, title) {
@@ -385,6 +372,12 @@
                 }
                 return string;
             }
+        }
+    };
+
+    $.fn.datagrid.defaults = {
+        load: function (grid) {
+            autosize: true
         }
     };
 

@@ -12,5 +12,4 @@
 <?php endif; ?>
 <!-- Si se ha enviado código javascript, lo insertamos en la página -->
 <?php	echo ( isset($javascript) ) ? $javascript:''; ?>
-<link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/estilos/errors.css"/>
 

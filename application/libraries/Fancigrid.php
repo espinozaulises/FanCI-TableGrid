@@ -14,7 +14,7 @@ class Fancigrid
 {
 
 	//Parametros que pueden definirse en el controller.
-	public $buttons 	= array();	// Botones de acción de la tabla.
+	public $actions 	= array();	// Botones de acción de la tabla.
 	public $columns 	= array(); 	// Arreglo que contiene las columnas y sus opciones
 	public $extra_params= 0;		// Valores de las variables extra por default 
 	public $grid_name	= 'fanCIgrid';
@@ -25,6 +25,7 @@ class Fancigrid
 	public $segment		= "";
 	public $sql_query	= array(); 	// Array que contiene los elementos de la consulta.
 	public $sql_string  = ""; 		// Cadena de texto de la consulta sql 
+	public $tableclass	= "table-striped table-bordered";
 	public $url_site 	= "";
 	
 	public $like_string	= "";		// Cadena que contiene los datos del filtro/busqueda de texto.
@@ -59,17 +60,19 @@ class Fancigrid
 	public function __construct(){
 
 		$this->CI =& get_instance();
-		$this->CI->load->library(array('table','pagination'));
-		$this->CI->config->load('pagination');
+		$this->CI->load->library(array('table','fancipager'));
+		$this->CI->config->load('fancipager');
 		$this->CI->config->load('fancigrid');
 		$this->CI->load->helper(array('fanci_helper','security'));
 		$this->CI->load->model("fanci_model");
 
 		log_message('debug', "Ci_datagrid Class Initialized");
 
+		$class = $this->tableclass;
+
 	// TEMPLATE POR DEFAULT DE LA TABLA DEL GRID
 		$tmpl = array ( 
-		'table_open'  => "<table class='tablegrid table-bordered table-striped' id='". $this->grid_name ."'>" 
+		'table_open'  => "<table class='fancigrid $class' id='". $this->grid_name ."'>" 
 		);
 
 		// Cargamos el template por default
@@ -120,16 +123,17 @@ class Fancigrid
 			}
 			$i++;
 		}
-		if( $this->col_actions )
+		if( count($this->actions) > 0 )
 		{
-			$args[$i] = array(
-						"data" 	 => $this->CI->config->item('text-commands'),
+			foreach ($this->actions as $key) {
+				$args[$i] = array(
+						"data" 	 => '&nbsp;',
 						"sorter" => FALSE,
-						"filter" => FALSE,
-						"format" => self::A_CENTER);
-			$this->i_col_actions = $i;	
+						"filter" => FALSE,);
+				$this->i_col_actions = $i++;
+
+			}
 		}
-		ksort($args);
 		$this->columns = $args;
 	}
 
@@ -149,16 +153,7 @@ class Fancigrid
 	function _get_sorter($key, $data)
 	{
 		if( $data["sorter"] ) {
-			$dropdown = '
-				<ul class="drop-arrow">
-					<li><a href="#" class="filter-arrow" id="'.$this->_clear_id($data["data"]).'"><span class="label">'.$data["data"].'</span><span class="toggle"></span></a>
-						<ul class="drop-arrow-slider" id="ul-'.$this->_clear_id($data["data"]).'">
-    						<li><a href="'.$this->pagination["base_url"]."/".$this->uri["offset"].'-'.$this->uri["limit"].'-'.$key.'-ASC-'.$this->uri["like_string"]."-".$this->uri["vars_url"].'" class="item">
-    							<span class="icon icon65">&nbsp;</span><span class="label">Orden ascendente</span></a></li>
-    						<li><a href="'.$this->pagination["base_url"]."/".$this->uri["offset"].'-'.$this->uri["limit"].'-'.$key.'-DESC-'.$this->uri["like_string"]."-".$this->uri["vars_url"].'" class="item">
-    							<span class="icon icon62">&nbsp;</span><span class="label">Orden descendente</span></a></li>';
-			$dropdown .= '</ul></li></ul>';
-			return $data["data"].'<a href="#" style="float:right"><span class="icon icon202">Sorter</span></a>';
+			return '<a href="#">'.$data["data"].'</a>';
 		}
 		else {
 			return $data["data"];
@@ -211,37 +206,30 @@ class Fancigrid
 		return anchor($this->url_site.$uri , '<span class="sprite '.$ico.'"></span>', $attributes);
 	}
 
-	function _set_actions($id){
+	function _set_actions($id, $btn){
 
 		$botones = "";
 		
-		foreach ($this->buttons as $btn){
-
-			if( $btn["button"] === 'file' ) {
-
-			}
-			if ( is_array($btn) ) {
-				$opts = $this->CI->config->item('dg_'.$btn["button"]);
-				$opts["id"] 	= 'dg_'.$btn["button"];
-				$opts['icon'] 	= ( isset($btn['icon']) ) ? $btn['icon'] : $opts['icon'];
-				$opts['title'] 	= ( isset($btn['title']) ) ? $btn['title'] : $opts['title'];
-				$opts['url']	= ( isset($btn['url']) ) ? $btn['url'].'/'.$id : $this->url_site."/".$opts['url'].$id;
-			}	else 	{
-				$opts = $this->CI->config->item('dg_'.$btn);
-				$opts["id"] = 'dg_'.$btn;
-				$opts['url']	= $this->url_site.'/'.$opts['url'].$id;
-			}
-
-			$attr = array(
-				"id" 	=> $opts["id"],
-				"name" 	=> $opts["id"],
-				"title" => $opts["title"],
-				"class" => "grid-actions ttipL ".$opts["id"]
-				);
-			$botones .= anchor( $opts["url"], '<span class="dg-icon dg-icon-'. $opts["icon"].'"></span>', $attr);
+		if ( is_array($btn) ) {
+			$opts = $this->CI->config->item('dg_'.$btn["button"]);
+			$opts["id"] 	= 'dg_'.$btn["button"];
+			$opts['icon'] 	= ( isset($btn['icon']) ) ? $btn['icon'] : $opts['icon'];
+			$opts['title'] 	= ( isset($btn['title']) ) ? $btn['title'] : $opts['title'];
+			$opts['url']	= ( isset($btn['url']) ) ? $btn['url'].'/'.$id : $this->url_site."/".$opts['url'].$id;
+		}	else 	{
+			$opts = $this->CI->config->item('dg_'.$btn);
+			$opts["id"] = 'dg_'.$btn;
+			$opts['url']	= $this->url_site.'/'.$opts['url'].$id;
 		}
 
-		return array("data" => $botones, "class" => "ui-widget-content dg-options" );
+		$attr = array(
+			"id" 	=> $opts["id"],
+			"name" 	=> $opts["id"],
+			"title" => $opts["title"],
+			"class" => "grid-actions ttipL ".$opts["id"]
+			);
+		$botones .= anchor( $opts["url"], '<span class="fg-icon fg-icon-'. $opts["icon"].'"></span>', $attr);
+		return array("data" => $botones, "class" => "fg-options" );
 	}
 
 	// --------------------------------------------------------------------
@@ -410,7 +398,7 @@ class Fancigrid
 		$rows = $this->CI->fanci_model->select( $this->sql_string );
 
 		// Inicia la magia: Agregando filas a la tabla.
-		foreach( $rows as $key => $field ) {
+		foreach( $rows as $key => $field ) {	
 			$i = 0;
 			$tmp_row= "";
 			$id = $field[$this->prim_key];
@@ -423,29 +411,31 @@ class Fancigrid
 
 			// Agrego la columna de los checkbox si $col_check = true.
 			if( $this->col_check )	{
-				$tmp_row[$i] = array("data" => self::ROW_CHECK . $id. "' />", "class" =>"ui-widget-content dg-select");
+				$tmp_row[$i] = array("data" => self::ROW_CHECK . $id. "' />", "class" =>"fg-select");
 			}
 			$i++;
 			// Paso el resultado de la consulta a un array temporaL
-			foreach ($field as $j => $row) {
-				$col = $this->columns[$i];
+			foreach ($this->columns as $cols) {
+				if ( isset($cols["field"]) )	{ //Si no es el check
 
-				$tmp_row[$i] = $this->_parser_format( $col["format"], $row );
+					$tmp_row[$i] = $this->_parser_format( $cols["format"], $field[$cols["field"]] );
+					if( $cols["format"] == 'money' ){
+						if( isset($totales[$i]) )
+							$totales[$i] += $field[$cols["field"]];
+						else
+							$totales[$i] = $field[$cols["field"]];
+					} else {
+						$totales[$i] = '&nbsp;';
+					}
+					$i++;
 
-				if( $col["format"] == 'money' ){
-					if( isset($totales[$i]) )
-						$totales[$i] += $row;
-					else
-						$totales[$i] = $row;
-				} else {
-					$totales[$i] = '';
 				}
-
-				$i++;
 			}
 			// Agrego la columna de acciones si $col_actions = true.
-			if( $this->col_actions )	{
-				$tmp_row[$i] = $this->_set_actions($id);
+			if( count($this->actions) > 0 )	{
+				foreach ($this->actions as $btn) {
+					$tmp_row[] = $this->_set_actions($id, $btn);
+				}
 			}
 
 			$this->CI->table->row_id( $id );
@@ -455,7 +445,7 @@ class Fancigrid
 			foreach ($totales as $key => $value) {
 				if( is_numeric($value) ) {
 					$monto = $this->_parser_format( "money", $value );
-					$totales[$key] = array("data" => $monto, "class" => "ui-widget-content dg-totales" );
+					$totales[$key] = array("data" => $monto, "class" => "totales" );
 				}
 			}
 			$this->CI->table->add_row($totales);
@@ -463,9 +453,9 @@ class Fancigrid
 
 		$this->pagination['per_page'] = $this->uri["limit"];
 		$this->pagination['total_rows'] = $this->CI->fanci_model->count_rows();
-		$this->CI->pagination->initialize($this->pagination);
+		$this->CI->fancipager->initialize($this->pagination);
 
-		$footing = array("data" => $this->CI->pagination->dg_create_links($this->uri), "colspan" => $this->cont_fields-1);
+		$footing = array("data" => $this->CI->fancipager->create_links($this->uri), "colspan" => $this->cont_fields-1, "class" => "pager");
 		$this->CI->table->set_footing("",$footing);
 
 		$div_params = '<div style="display:none">
@@ -513,10 +503,10 @@ class Fancigrid
 				$content = '<a href="'.prep_url($data).'">'.$texto.'</a>';
 				break;
 			case 'money':
-				$content = '<span class="fLeft">$</span><span class="fRight">'.number_format($data,2,'.',',').'</span>';
+				$content = '<span class="fgLeft">$</span><span class="fgRight">'.number_format($data,2,'.',',').'</span>';
 				break;
 			case 'percent':
-				$content = '<div class="dg-percent" style="width:'.$data.'%">'.$data.'%</div>';
+				$content = '<div class="percent"><div class="bar" style="width: '.$data.'%">'.$data.'%</div></div>';
 				break;
 			case 'replace':
 				if( isset($params[$data]) )

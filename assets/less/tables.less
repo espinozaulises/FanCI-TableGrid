@@ -24,7 +24,6 @@ table {
   // Cells
   th,
   td {
-    padding: 5px;
     line-height: @baseLineHeight;
     text-align: left;
     vertical-align: top;
@@ -34,7 +33,7 @@ table {
     color: @linkColor;
     font-family: @headersFontFamily;
     font-weight: 600;
-    #gradient > .vertical-four-colors();
+    #gradient > .vertical-four-colors(#eaf4fd, #eaf4fd, #dfeffc,#ebf5fd);
     text-shadow: 1px 1px 0 #FFFFFF;
 
   }
@@ -57,8 +56,6 @@ table {
   }
 }
 
-
-
 // CONDENSED TABLE W/ HALF PADDING
 // -------------------------------
 
@@ -72,17 +69,33 @@ table {
 
 // BORDERED VERSION
 // ----------------
-
-.table-bordered {
-  border: 1px solid @tableBorder;
+.table-bordered,
+.tablegrid {
   border-collapse: separate; // Done so we can round those corners!
   *border-collapse: collapsed; // IE7 can't round corners anyway
   border-left: 0;
+}
+
+.table-bordered {
+  border: 1px solid @tableBorder;
   .border-radius(4px);
   th,
   td {
     border-left: 1px solid @tableBorder;
   }
+}
+
+.tablegrid {
+    border: 1px solid @gridBorder;
+  .border-radius(4px);
+  th,
+  td {
+    border-top: 1px solid @gridBorder !important;
+    
+    padding: 5px !important;
+  }
+}
+.table-bordered, .tablegrid {
   // Prevent a double border
   caption + thead tr:first-child th,
   caption + tbody tr:first-child th,
@@ -189,3 +202,74 @@ table {
   .span23    { .tableColumns(23); }
   .span24    { .tableColumns(24); }
 }
+
+/******************************
+******     SPRITES      *******
+*******************************/
+.tg-icon  { 
+  display: inline-block; 
+  background: transparent url(images/tg-sprite-color.png) no-repeat; 
+  height:18px;
+  margin:0 5px;
+  .transition(background-image 0.30s linear);
+  width:18px;
+}
+a:hover .tg-icon  { 
+  background: transparent url(images/tg-sprite-color.png) no-repeat; 
+}
+
+.tg-icon-calendar-blue  {  width:19px;height:20px;background-position:-3px -1px}
+.tg-icon-trash1         {background-position:-25px -2px}
+.tg-icon-edit           {background-position:-47px -2px;}
+.tg-icon-add            {background-position:-66px -2px}
+.tg-icon-circle-right   {background-position:-86px -2px}
+.tg-icon-circle-left    {background-position:-105px -2px}
+.tg-icon-detail         {background-position:-126px -2px}
+.tg-icon-circle-error   {background-position:-144px -2px}
+.tg-icon-square-right   {background-position:-163px -2px}
+.tg-icon-square-left    {background-position:-182px -2px}
+.tg-icon-arrow-left     {background-position:-203px -1px}
+.tg-icon-arrow-right    {background-position:-225px -1px;}
+.tg-icon-circle-del     {background-position:-3px -23px}
+.tg-icon-orange-alert   {background-position:-24px -24px}
+.tg-icon-orange-error   {background-position:-46px -23px}
+.tg-icon-comment        {background-position:-67px -23px}
+.tg-icon-search         {background-position:-88px -23px}
+.tg-icon-coin           {background-position:-108px -23px}
+.tg-icon-pay-table      {background-position:-128px -23px}
+.tg-icon-add-pay        {background-position:-152px -23px}
+.tg-icon-del-pay        {background-position:-173px -23px}
+.tg-icon-bill           {background-position:-193px -23px}
+.tg-icon-bar-chart      {background-position:-213px -22px}
+.tg-icon-saving         {background-position:-4px -45px}
+.tg-icon-add-pay2       {background-position:-24px -46px}
+.tg-icon-del-pay2       {background-position:-45px -46px}
+.tg-icon-bills          {background-position:-68px -45px}
+.tg-icon-down-blue      {background-position:-88px -45px}
+.tg-icon-down-green     {background-position:-108px -45px}
+.tg-icon-alert          {background-position:-129px -45px}
+.tg-icon-up-green       {background-position:-152px -45px}
+.tg-icon-user           {background-position:-174px -44px}
+.tg-icon-xml1           {background-position:-194px -46px}
+.tg-icon-xml2           {background-position:-214px -46px}
+.tg-icon-group          {background-position:-4px -67px}
+.tg-icon-success-circle {background-position:-108px -66px}
+.tg-icon-pdf            {background-position:-152px -67px}
+.tg-icon-xls            {background-position:-194px -67px}
+.tg-icon-trash2 {background-position:-214px -67px}
+.tg-icon-home {background-position:-28px -88px}
+.tg-icon-exit {background-position:-47px -87px}
+.tg-icon-calendar1 {background-position:-68px -88px}
+.tg-icon-calendar2 {background-position:-88px -88px}
+.tg-icon-logout {background-position:-108px -88px}
+.tg-icon-preview {background-position:-130px -88px}
+.tg-icon-admin {background-position:-153px -88px}
+.tg-icon-delete1 {background-position:-174px -89px}
+.tg-icon-delete2 {background-position:-194px -89px}
+.tg-icon-calendar3 {background-position:-214px -89px}
+.tg-icon-access {background-position:-144px -118px}
+.tg-icon-key {background-position:-166px -119px}
+.tg-icon-close {background-position:-214px -118px}
+.tg-icon-sortdesc       {width:13px;height:13px;background-position: -4px -149px;}
+.tg-icon-sortasc        {width:13px;height:13px;background-position: -18px -149px;}
+.tg-icon-sorter         {width:13px;height:13px;background-position: -32px -149px;}

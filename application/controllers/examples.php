@@ -41,33 +41,39 @@ class Examples extends CI_Controller {
 					"data" 	 => "FECHA INGRESO",
 					"field"  => "fechaIngreso",
 					"sorter" => TRUE,
-					"filter" => FALSE),
+					"filter" => FALSE,
+					"format" => "date"
+					),
 			6 =>	array(
 					"data" 	 => "EDAD",
 					"field"  => "edad",
 					"sorter" => TRUE,
-					"filter" => FALSE),
+					"filter" => FALSE,
+					"format" => "center"),
 			7 =>	array(
 					"data" 	 => "RECORD VENTA",
 					"field"  => "record",
 					"sorter" => TRUE,
-					"filter" => FALSE),
+					"filter" => FALSE,
+					"format" => "money"),
 			8 =>	array(
 					"data" 	 => "PORCENTAJE",
 					"field"  => "avance",
 					"sorter" => TRUE,
-					"filter" => FALSE),		
+					"filter" => FALSE,
+					"format" => "percent"),		
 		);
 		
 		$params = array(
 		            'url_site' 	=> base_url("examples"),
 		            'columns' 	=> $columns,
-		            'buttons' 	=> array("view","edit","trash"),
+		            'actions' 	=> array("view","edit","trash"),
 		            'sql_query'	=> $sql,
 		            'prim_key'	=> 'ID',
 		            'my_segment'=> 3,
 		            'pagination'=> $config,
-		            'extra_params'=> 1
+		            'extra_params'=> 1,
+		            'autosum'	=>	true
 		);
 		
 		$toolbar = array(
