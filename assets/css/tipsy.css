@@ -1,0 +1,158 @@
+.tipsy { 
+  font-size: .7em; 
+  font-family: "Open Sans";
+  padding: 6px; 
+  position: absolute; 
+  z-index: 100000; 
+}
+
+  .tipsy-arrow { 
+     
+    height: 0; 
+    line-height: 0; 
+    position: absolute; 
+    width: 0; 
+    top: 3px;
+    z-index: 999;
+  }
+
+  .tipsy-arrow-black{
+    border: 5px dashed #000;
+  }
+
+  .tipsy-arrow-cream{
+    border: 5px dashed #F9E98E;
+  }
+
+  .tipsy-arrow-blue{
+    border: 5px dashed #2BB0D7;
+  }
+
+  .tipsy-arrow-red{
+    border: 5px dashed #CE6F6F;
+  }
+
+  .tipsy-arrow-green{
+    border: 5px dashed #8FD401;
+  }
+
+  .tipsy-inner { 
+    border-radius: 3px; 
+    max-width: 200px; 
+    padding: 8px; 
+    text-align: center; 
+    z-index: 998;
+  }
+
+  /* Uncomment for shadow */
+  .tipsy-inner { 
+    box-shadow: 3px 3px 5px #333; 
+  }
+  .tipsy-style-black{
+    background-color: #000; 
+    color: #FFF; 
+    border: 2px solid #FFF;
+  }
+
+  .tipsy-style-blue{
+    background-color: #9FDAEE; 
+    color: #000; 
+    border: 2px solid #2BB0D7;
+  }
+
+  .tipsy-style-cream{
+    background-color: #FBF7AA; 
+    color: #7C4F00; 
+    border: 2px solid #F9E98E;
+  }
+
+  .tipsy-style-green{
+    background-color: #A2D959; 
+    color: #000; 
+    border: 2px solid #8FD401;
+  }
+
+  .tipsy-style-red{
+    background-color: #BC0004; 
+    color: #FFF; 
+    border: 2px solid #CE6F6F;
+  }
+  
+  /* Rules to colour arrows 
+  .tipsy-arrow-n { border-bottom-color: #000; }
+  .tipsy-arrow-s { border-top-color: #000; }
+  .tipsy-arrow-e { border-left-color: #000; }
+  .tipsy-arrow-w { border-right-color: #000; }
+  */
+  
+	.tipsy-n .tipsy-arrow { 
+    border-bottom-style: solid; 
+    border-left-color: transparent; 
+    border-right-color: transparent;
+    border-top: none; 
+    left: 50%; 
+    margin-left: -5px; 
+  }
+
+  .tipsy-nw .tipsy-arrow { 
+    border-bottom-style: solid; 
+    border-left-color: transparent; 
+    border-right-color: transparent;
+    border-top: none; 
+    left: 10px; 
+  }
+
+  .tipsy-ne .tipsy-arrow { 
+    right: 10px; 
+    border-bottom-style: solid; 
+    border-top: none;  
+    border-left-color: transparent; 
+    border-right-color: transparent;
+  }
+
+  .tipsy-s .tipsy-arrow { 
+    border-bottom: none;  
+    border-left-color: transparent; 
+    border-right-color: transparent; 
+    border-top-style: solid; 
+    bottom: -10; 
+    left: 50%; 
+    margin-left: -5px; 
+  }
+
+  .tipsy-sw .tipsy-arrow { 
+    bottom: 0; 
+    left: 10px; 
+    border-top-style: solid; 
+    border-bottom: none;  
+    border-left-color: transparent; 
+    border-right-color: transparent; 
+  }
+
+  .tipsy-se .tipsy-arrow { 
+    bottom: 0; 
+    right: 10px; 
+    border-top-style: solid; 
+    border-bottom: none; 
+    border-left-color: transparent; 
+    border-right-color: transparent; 
+  }
+
+  .tipsy-e .tipsy-arrow { 
+    right: 0; 
+    top: 50%; 
+    margin-top: -5px; 
+    border-left-style: solid; 
+    border-right: none; 
+    border-top-color: transparent; 
+    border-bottom-color: transparent; 
+  }
+
+  .tipsy-w .tipsy-arrow { 
+    left: 0; top: 50%; 
+    margin-top: -5px; 
+    border-right-style: solid; 
+    border-left: none; 
+    border-top-color: transparent; 
+    border-bottom-color: transparent; 
+  }

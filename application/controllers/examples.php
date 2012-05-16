@@ -7,13 +7,13 @@ class Examples extends CI_Controller {
 	function __construct(){
 		parent::__construct();
 	
-		$this->load->library(array('fancigrid', 'pagination'));
+		$this->load->library('fancigrid');
 	}
 	
 	function index()
 	{
 		$sql["select"]  = "*";
-		$sql["from"]    = "vendedores";
+		$sql["from"]    = "fancigrid";
 		$sql["where"]   = "1";
 				
 		$config['base_url'] = base_url("examples/index");
@@ -39,7 +39,7 @@ class Examples extends CI_Controller {
 					"sorter" => FALSE),
 			5 =>	array(
 					"data" 	 => "FECHA INGRESO",
-					"field"  => "fechaIngreso",
+					"field"  => "ingreso",
 					"sorter" => TRUE,
 					"filter" => FALSE,
 					"format" => "date"

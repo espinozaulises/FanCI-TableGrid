@@ -400,9 +400,9 @@ class Fancigrid
 		// Inicia la magia: Agregando filas a la tabla.
 		foreach( $rows as $key => $field ) {	
 			$i = 0;
-			$tmp_row= "";
+			$tmp_row = array();
 			$id = $field[$this->prim_key];
-			$totales[0] = '';
+			$totales = array();
 
 			// ¿Ocultar primary key en el grid?
 			if( $this->prim_key_hide ){
@@ -417,18 +417,21 @@ class Fancigrid
 			// Paso el resultado de la consulta a un array temporaL
 			foreach ($this->columns as $cols) {
 				if ( isset($cols["field"]) )	{ //Si no es el check
+					$colField = $cols["field"];
+					// PRUEBA
+					$dt = $field[$colField];
 
-					$tmp_row[$i] = $this->_parser_format( $cols["format"], $field[$cols["field"]] );
-					if( $cols["format"] == 'money' ){
+					$tmp_row[$i] = $this->_parser_format( $cols["format"], $field[$colField] );
+					
+					if( $cols["format"] === 'money' ){
 						if( isset($totales[$i]) )
-							$totales[$i] += $field[$cols["field"]];
+							$totales[$i] += $field[$colField];
 						else
-							$totales[$i] = $field[$cols["field"]];
+							$totales[$i] = $field[$colField];
 					} else {
 						$totales[$i] = '&nbsp;';
 					}
 					$i++;
-
 				}
 			}
 			// Agrego la columna de acciones si $col_actions = true.
@@ -473,7 +476,7 @@ class Fancigrid
 		return "<div id='fanCI-layout'>" . $this->CI->table->generate() . $div_params . "</div>";
 	}
 
-	function _parser_format( $str_format, $data ){
+	private function _parser_format( $str_format, $data ){
 		$function = $this->_parser_format_function( $str_format, ":{", "}" );
 		if( is_array( $function ) ) {
 			$format = strtolower( $function["format"] );
@@ -527,7 +530,7 @@ class Fancigrid
 	}
 
 
-	function _parser_format_function($str, $str_start, $str_end){
+	private function _parser_format_function($str, $str_start, $str_end){
 		if( strstr($str, ':{') ) {
 			$params	= strstr($str, $str_start);
 		  	
