@@ -153,7 +153,7 @@ class Fancigrid
 	function _get_sorter($key, $data)
 	{
 		if( $data["sorter"] ) {
-			return '<a href="#">'.$data["data"].'</a>';
+			return '<a class="sorter-grid" href="#" title="Click para ordenar ASC/DESC.">'.$data["data"].'</a>';
 		}
 		else {
 			return $data["data"];
@@ -226,7 +226,7 @@ class Fancigrid
 			"id" 	=> $opts["id"],
 			"name" 	=> $opts["id"],
 			"title" => $opts["title"],
-			"class" => "grid-actions ttipL ".$opts["id"]
+			"class" => "actions-grid ".$opts["id"]
 			);
 		$botones .= anchor( $opts["url"], '<span class="fg-icon fg-icon-'. $opts["icon"].'"></span>', $attr);
 		return array("data" => $botones, "class" => "fg-options" );

@@ -17,6 +17,9 @@
 
     $(document).ready(function () {
         $.history = new History(); // singleton instance
+        $('a.actions-grid').tipsy({gravity: 'e'});
+        $('a.sorter-grid').tipsy({gravity: 'n'});
+        $('.pager .btn-group .btn').tipsy({gravity: 's'});
     });
 
     // -----------------------------------------------------------------

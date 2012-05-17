@@ -1,9 +1,10 @@
 	<?php echo $grid;?>
 	<script>
-	$(function(){
+	$(document).ready(function(){
 		$('#fanCIgrid').datagrid({
 			autosize: true
 		});
+		
 	});
 	</script>
 	</body>

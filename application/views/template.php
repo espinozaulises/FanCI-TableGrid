@@ -15,16 +15,16 @@
   <noscript><link rel="stylesheet" href="[fallback css]" /></noscript>
 <![endif]-->
 <script type="text/javascript" src="<?=base_url();?>assets/js/jquery-ui-1.8.16.min.js"></script>
-
-<link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/css/buttons-plus.css"/>
 <script type="text/javascript" src="<?=base_url();?>assets/js/jquery.fanCIgrid.js"></script>
 <script type="text/javascript" src="<?=base_url();?>assets/js/jquery.history.js"></script>
+<script type="text/javascript" src="<?=base_url();?>assets/js/jquery.tipsy.js"></script>
+
 <?=$scripts?>
 <style type="text/css">
 	.toolbar-container {
-		     display: table-cell;
-     vertical-align: middle;
-     position: relative;
+		  display: table-cell;
+      vertical-align: middle;
+      position: relative;
 	}
 </style>
 <body>
@@ -39,4 +39,5 @@
   		</div>
   	</div>
 </body>
+
 </html>
